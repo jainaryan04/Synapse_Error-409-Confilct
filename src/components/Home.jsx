@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../src/index.css";
+import { useAuth } from '../AuthContext';
 
 export default function Home() {
+  const { authenticate } = useAuth();
   const imageCount = 5;
   const images = Array.from({ length: imageCount });
   const rowsCount = 5;
@@ -59,17 +61,14 @@ export default function Home() {
       try {
         setStatus('authenticating');
   
-        // Check if device supports fingerprint authentication
         const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
         if (!available) {
           throw new Error('Fingerprint authentication is not available on this device');
         }
   
-        // Create challenge
         const challenge = new Uint8Array(32);
         window.crypto.getRandomValues(challenge);
   
-        // Authentication options
         const options = {
           publicKey: {
             challenge,
@@ -79,11 +78,11 @@ export default function Home() {
           }
         };
   
-        // Start authentication
         const credential = await navigator.credentials.get(options);
   
         if (credential) {
           setStatus('success');
+          authenticate(); // Set authentication state
           navigate('/webcam');
           console.log('Authentication successful:', credential);
         }
