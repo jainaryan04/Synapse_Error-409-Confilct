@@ -38,7 +38,7 @@ export default function Home() {
         flipCardInColumn(); // Start flipping the first row in the column
       } else {
         setTimeout(() => {
-        navigate('/webcam');  // Redirect after all flips are done
+          // Redirect after all flips are done
         }, 1500); // Delay before navigating after all flips are complete
       }
     };
@@ -46,18 +46,73 @@ export default function Home() {
     flipColumn(); // Start flipping columns
   };
 
+  const [status, setStatus] = useState('idle');
+    const [errorMessage, setErrorMessage] = useState('');
+  
+    const startAuthentication = async () => {
+      if (!window.PublicKeyCredential) {
+        setStatus('error');
+        setErrorMessage('Your browser does not support fingerprint authentication');
+        return;
+      }
+  
+      try {
+        setStatus('authenticating');
+  
+        // Check if device supports fingerprint authentication
+        const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+        if (!available) {
+          throw new Error('Fingerprint authentication is not available on this device');
+        }
+  
+        // Create challenge
+        const challenge = new Uint8Array(32);
+        window.crypto.getRandomValues(challenge);
+  
+        // Authentication options
+        const options = {
+          publicKey: {
+            challenge,
+            timeout: 60000,
+            userVerification: 'required',
+            rpId: window.location.hostname,
+          }
+        };
+  
+        // Start authentication
+        const credential = await navigator.credentials.get(options);
+  
+        if (credential) {
+          setStatus('success');
+          navigate('/webcam');
+          console.log('Authentication successful:', credential);
+        }
+      } catch (error) {
+        setStatus('error');
+        setErrorMessage(error.message || 'Authentication failed');
+        console.error('Authentication error:', error);
+      }
+    };
+
   return (
     <div className="h-screen w-screen relative overflow-hidden grid-container">
       <div
         className="absolute inset-0 flex items-center justify-center z-10 cursor-pointer"
         onClick={handleClick}
       >
-        <p className="text-4xl font-bold text-white px-6 py-3 rounded-lg shadow-lg font-press-start">
+        <button onClick={startAuthentication}
+        disabled={status === 'authenticating'} className="text-2xl lg:text-4xl font-bold text-white px-6 py-3 font-press-start">
           Get Started
-        </p>
+        </button>
       </div>
 
-      <div className="grid grid-rows-5 grid-cols-5 h-full w-full">
+      <img
+                    src="/home-bg.jpg"
+                    alt="Banner"
+                    className="w-full h-full object-cover"
+                  />
+
+      {/* <div className="grid grid-rows-5 grid-cols-5 h-full w-full">
         {rows.map((_, rowIndex) =>
           images.map((_, imgIndex) => {
             const cardIndex = rowIndex * imageCount + imgIndex;
@@ -87,7 +142,7 @@ export default function Home() {
             );
           })
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
