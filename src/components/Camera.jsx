@@ -119,10 +119,10 @@ export default function WebcamPage() {
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center z-10">
-        <div className="flex bg-white rounded-2xl shadow-lg p-4 space-x-4">
+        <div className="flex flex-col lg:flex-row bg-white rounded-2xl shadow-lg p-4 space-x-4 w-[90vw]">
           {/* Video Section */}
           <div className="flex flex-col items-center space-y-4">
-            <video ref={videoRef} autoPlay className="object-cover w-[60vw] h-[80vh] rounded-2xl shadow-md" />
+            <video ref={videoRef} autoPlay className="object-cover h-[20vh] w-[60vw] lg:h-[80vh] rounded-2xl shadow-md" />
             <button
               onClick={() => setIsPaused(prev => !prev)}
               className={`px-4 py-2 text-white rounded-lg ${
@@ -134,12 +134,12 @@ export default function WebcamPage() {
           </div>
 
           {/* Video Analysis Section */}
-          <div className="w-[30vw] p-4 bg-gray-100 rounded-2xl shadow-inner space-y-4">
+          <div className=" lg:w-[30vw] p-4 bg-gray-100 rounded-2xl shadow-inner space-y-4 mt-9 lg:mt-0 text-[1vh] lg:text-[3vh]">
             <h2 className="text-xl font-semibold text-gray-800">Video Analysis</h2>
             <div className="space-y-2">
-              <p className="text-gray-600">• Object Detection: <span className="font-medium text-green-600">Active</span></p>
-              <p className="text-gray-600">• Frame Rate: <span className="font-medium text-blue-600">30 FPS</span></p>
-              <p className="text-gray-600">• Resolution: <span className="font-medium text-purple-600">1280x720</span></p>
+              <p className="text-gray-600">• Object Detection: <span className="font-small lg:font-medium text-green-600">Active</span></p>
+              <p className="text-gray-600">• Frame Rate: <span className=" font-small lg:font-medium text-blue-600">30 FPS</span></p>
+              <p className="text-gray-600">• Resolution: <span className="font-small lg:font-medium text-purple-600">1280x720</span></p>
             </div>
             <div className="w-full space-y-2">
               <textarea

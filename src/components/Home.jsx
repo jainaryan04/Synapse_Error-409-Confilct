@@ -5,48 +5,8 @@ import { useAuth } from '../AuthContext';
 
 export default function Home() {
   const { authenticate } = useAuth();
-  const imageCount = 5;
-  const images = Array.from({ length: imageCount });
-  const rowsCount = 5;
-  const rows = Array.from({ length: rowsCount });
 
-  const [flippedCards, setFlippedCards] = useState(Array(imageCount * rowsCount).fill(false)); // Track flipped state for each card
   const navigate = useNavigate();
-
-  const handleClick = () => {
-    let columnIndex = 0;  // Start with the first column
-
-    const flipColumn = () => {
-      if (columnIndex < imageCount) { // Iterate through each column
-        let rowIndex = 0;
-
-        const flipCardInColumn = () => {
-          if (rowIndex < rowsCount) { // Flip cards in the current column, row by row
-            const cardIndex = rowIndex * imageCount + columnIndex;
-            setFlippedCards(prevState => {
-              const newState = [...prevState];
-              newState[cardIndex] = true; // Flip the current card
-              return newState;
-            });
-
-            rowIndex++;
-            setTimeout(flipCardInColumn, 100); // Flip next card in the same column after a short delay
-          } else {
-            columnIndex++; // Move to the next column
-            setTimeout(flipColumn, 300); // Delay before flipping the next column
-          }
-        };
-
-        flipCardInColumn(); // Start flipping the first row in the column
-      } else {
-        setTimeout(() => {
-          // Redirect after all flips are done
-        }, 1500); // Delay before navigating after all flips are complete
-      }
-    };
-
-    flipColumn(); // Start flipping columns
-  };
 
   const [status, setStatus] = useState('idle');
     const [errorMessage, setErrorMessage] = useState('');
@@ -82,7 +42,7 @@ export default function Home() {
   
         if (credential) {
           setStatus('success');
-          authenticate(); // Set authentication state
+          authenticate(); 
           navigate('/webcam');
           console.log('Authentication successful:', credential);
         }
@@ -97,9 +57,9 @@ export default function Home() {
     <div className="h-screen w-screen relative overflow-hidden grid-container">
       <div
         className="absolute inset-0 flex items-center justify-center z-10 cursor-pointer"
-        onClick={handleClick}
+        onClick={startAuthentication}
       >
-        <button onClick={startAuthentication}
+        <button
         disabled={status === 'authenticating'} className="text-2xl lg:text-4xl font-bold text-white px-6 py-3 font-press-start">
           Get Started
         </button>
