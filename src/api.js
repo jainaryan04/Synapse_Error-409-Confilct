@@ -9,3 +9,11 @@ export async function submitIssue(formData) {
       }
     });
   }
+
+  export const uploadVideo = (formData) => {
+    return axios.post(`${BACKEND_URL}/api/upload-video`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  };
