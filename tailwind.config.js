@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         anton: ["Anton", "sans-serif"], // This will use Anton font
+        'press-start': ['"Press Start 2P"', 'cursive'],
       },
     },
   },

@@ -1,16 +1,16 @@
-import './App.css'
-import Landing from "./components/Landing"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import WebcamPage from './components/Camera';
 
 function App() {
-
   return (
-    <>
-      <div className='w-[100vw] h-[100vh] overflow-hidden'>
-        <Landing />
-      </div>
-      
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/webcam" element={<WebcamPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
