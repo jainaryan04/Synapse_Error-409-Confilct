@@ -11,6 +11,9 @@ export default function Home() {
   const [status, setStatus] = useState('idle');
     const [errorMessage, setErrorMessage] = useState('');
   
+    const openCamera =()=>{
+      navigate("/webcam");
+    }
     const startAuthentication = async () => {
       if (!window.PublicKeyCredential) {
         setStatus('error');
@@ -57,10 +60,11 @@ export default function Home() {
     <div className="h-screen w-screen relative overflow-hidden grid-container">
       <div
         className="absolute inset-0 flex items-center justify-center z-10 cursor-pointer"
-        onClick={startAuthentication}
+      onClick={openCamera}
       >
         <button
-        disabled={status === 'authenticating'} className="text-2xl lg:text-4xl font-bold text-white px-6 py-3 font-press-start">
+        //disabled={status === 'authenticating'} 
+        className="text-2xl lg:text-4xl font-bold text-white px-6 py-3 font-press-start">
           Get Started
         </button>
       </div>

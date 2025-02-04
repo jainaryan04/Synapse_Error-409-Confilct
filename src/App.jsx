@@ -28,9 +28,7 @@ const App = () => {
           <Route
             path="/webcam"
             element={
-              <ProtectedRoute>
                 <WebcamPage />
-              </ProtectedRoute>
             }
           />
         </Routes>
