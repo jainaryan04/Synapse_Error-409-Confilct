@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 6
+names: ['Dead soldier -enemy-', 'Dead soldier -frd-', 'Tank', 'Wall', 'enemy', 'friend']
+
+roboflow:
+  workspace: baggage-and-barcode
+  project: synapse-battlefield-detect
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/baggage-and-barcode/synapse-battlefield-detect/dataset/1
